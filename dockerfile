@@ -15,18 +15,18 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制打包的环境到容器
-COPY esmfold.tar.gz /opt/esmfold.tar.gz
+COPY esm1v.tar.gz /opt/esm1v.tar.gz
 
 # 解压环境
-RUN mkdir /opt/esmfold && tar -xzf /opt/esmfold.tar.gz -C /opt/esmfold && \
-    rm /opt/esmfold.tar.gz
+RUN mkdir /opt/esm1v && tar -xzf /opt/esm1v.tar.gz -C /opt/esm1v && \
+    rm /opt/esm1v.tar.gz
 
 # 设置 PATH 环境变量并运行 conda-unpack
-RUN export PATH=/opt/esmfold/bin:$PATH && /opt/esmfold/bin/conda-unpack
+RUN export PATH=/opt/esm1v/bin:$PATH && /opt/esmfold/bin/conda-unpack
 
 
 # 设置 PATH 环境变量
-ENV PATH=/opt/esmfold/bin:/opt/conda/bin:$PATH
+ENV PATH=/opt/esm1v/bin:/opt/conda/bin:$PATH
 
 # 设置工作目录
 WORKDIR /workspace/esm1v
@@ -35,9 +35,8 @@ WORKDIR /workspace/esm1v
 COPY ./esm1v/ /workspace/esm1v
 
 # 设置默认入口点，激活环境并运行脚本
-#ENTRYPOINT ["/bin/bash", "-c", "source activate esmfold && exec \"$@\""]
 
-ENTRYPOINT ["/bin/bash", "-c", "source /opt/esmfold/bin/activate esmfold && /workspace/esm1v/predict.sh \"$@\"", "--"]
+ENTRYPOINT ["/bin/bash", "-c", "source /opt/esm1v/bin/activate esm1v && /workspace/esm1v/predict.sh \"$@\"", "--"]
 
 #["/bin/bash", "-c", "source activate fastMSA && exec /workspace/DHR/fastMSA.sh \"$@\"", "--"]
 
