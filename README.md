@@ -2,7 +2,7 @@
 ## Project Introduction  
 **ESM-1v** is a mutation prediction tool developed by Facebook AI Research in 2021, based on the ESM protein language model.
 
-## Installation & Execution for Local Deployment
+## Installation & Execution for HPC Deployment
 Build image from docker file
 ```shell
 docker build -f dockerfile -t esm-1v:latest .
